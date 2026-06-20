@@ -1,5 +1,5 @@
 # JuniorEngrTools/core/parquet_engineering_schema.py
-# Extended ecosystem Parquet schema for engineering data with BitNet embeddings.
+# Platform-agnostic Parquet schema for engineering data.
 
 import pyarrow as pa
 
@@ -13,7 +13,6 @@ ENGINEERING_SCHEMA_V3 = pa.schema([
 ])
 
 def create_materials_table():
-    # Example with shape-dependent properties (real variation from specs)
     data = {
         "id": ["AL6061-T6-bar", "AL6061-T6-sheet", "AL6061-T6-tube"],
         "category": ["aluminium", "aluminium", "aluminium"],

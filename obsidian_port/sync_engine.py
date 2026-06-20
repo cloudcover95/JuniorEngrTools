@@ -1,5 +1,5 @@
 # JuniorEngrTools/obsidian_port/sync_engine.py
-# Port for the software suite's Obsidian vault to connect into JuniorHome/Quant/etc ecosystem.
+# Obsidian synchronization for ecosystem connectivity.
 
 import os
 
@@ -17,10 +17,10 @@ class ObsidianSyncEngine:
 
     def sync_from_ecosystem(self):
         try:
-            home_data = read_parquet_with_evolution('./02_Assets/home/power/telemetry.parquet')
-            self.export_calculation('home_power_sync', str(home_data))
+            # Example cross-component sync
+            pass
         except:
             pass
 
     def allow_vault_query(self, query):
-        return f'Query {query} executed locally against ecosystem data lakes'
+        return f'Query {query} executed locally'

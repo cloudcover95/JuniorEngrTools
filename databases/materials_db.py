@@ -1,6 +1,5 @@
 # JuniorEngrTools/databases/materials_db.py
-# 300+ materials with shape-dependent properties (from ASTM/ASM/ISO).
-# BitNet semantic search.
+# Materials database with shape-dependent properties.
 
 from ..core.parquet_engineering_schema import create_materials_table, ENGINEERING_SCHEMA_V3
 
@@ -16,7 +15,6 @@ class MaterialsDatabase:
             pq.write_table(self.table, path)
 
     def search(self, query: dict):
-        # BitNet-powered semantic search
         results = []
         for row in self.table.to_pylist():
             if all(str(v).lower() in str(row).lower() for v in query.values()):

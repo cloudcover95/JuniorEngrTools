@@ -1,5 +1,5 @@
 # JuniorEngrTools/standards/standards_db.py
-# Categorized standards with BitNet semantic search.
+# Categorized standards database.
 
 class StandardsDatabase:
     def __init__(self):

@@ -1,5 +1,5 @@
 # JuniorEngrTools/calculators/structural.py
-# Beam, Stress, Fits, etc. + BitNet standards suggestion.
+# Structural calculators with standards suggestion.
 
 import math
 

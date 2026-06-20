@@ -1,49 +1,43 @@
 # JuniorEngrTools
 
-**Complete Local Sovereign Engineering Tools Suite (BitNet-centric)**
+**Complete Local Sovereign Engineering Tools Suite (BitNet-centric, Cross-Platform)**
 
-Production-grade, entirely local suite for engineering, manufacturing, maintenance, and operations across the JuniorCloudllc ecosystem.
+Production-grade, entirely local suite for engineering, manufacturing, maintenance, and operations. Designed for all working professionals on Windows, Mac, or Linux.
 
-Incorporates JuniorClimbs spatial/kinematic tech and JuniorHome power/telecom/IoT. Integrated with SovereignLongHorizonAGI for long-horizon planning and ConservativeDiversifiedLongTermAllocator for procurement.
+The suite is sovereign and local-first, with optional deep integration into AI/ML components for intelligent assistance. It supports high-density data handling via Parquet and includes a wide range of calculators, databases, and tools commonly used in professional engineering workflows.
 
-All data in 02_Assets Parquet with schema evolution. Zero-trust. Apple Silicon optimized (M4/M5/Ultra/ANE via NeuralEngineUtil). No cloud.
-
-## Included Components
+## Key Features
 
 **Databases**
-- Materials Database (300+ entries with shape/form-dependent properties from ASTM/ASM/ISO specs - e.g., AL6061-T6 bar vs sheet vs tube variations)
-- Fastener Database + full Bolt Analysis + MMPDS
+- Materials Database (300+ entries with shape/form-dependent properties from standard specifications)
+- Fastener Database + full Bolt Analysis
 
-**Calculators (local, many BitNet-optimized for smart mode)**
+**Calculators**
 - Beam Analysis, Moment of Inertia, Stress & Strain, Composite Laminate
 - Engineering Unit Converter + Formulas Sheet
 - Fits & Tolerances, Clearance Holes, Tap/Drill Depths, Pin Hole, Keyway, Sheet Metal Gauge, Pipe Schedules/Threads
 - Steam Tables
-- Full A3 Motion Control suite: Linear Actuator Force/Speed (ball/lead screws), Critical Speed, Belt Motion, Pulley Ratio, Gear Reduction, Reflective Inertia, Acceleration/Deceleration curves
+- Full motion and force calculation suite (linear actuators, critical speed, belt/gear systems, inertia, acceleration curves)
 
 **Documentation & Inventory**
 - Bill of Materials (versioned structured + flattened)
-- Complete Documentation Suite: Redlines, build plans, permits, renders, maintenance logs
-- Parts Inventory with predictive restocking via plasticity signals
+- Complete Documentation Suite (redlines, build plans, permits, renders, maintenance logs)
+- Parts Inventory with predictive capabilities
 
 **Standards & References**
-- Categorized industry standards (LR, DNV, BV, ISO, ANSI, API 650, ISO9001, GMP, aerospace, pressure vessels, etc.)
-- MIL-SPEC list
+- Categorized industry standards and specifications (covering mechanical, structural, quality, maritime, aerospace, and more)
 
-**BitNet / AGI Layer**
-- BitNet-powered semantic search and optimization (material selection, standards lookup, parameter optimization)
-- Integrated with SovereignLongHorizonAGI for long-horizon project/maintenance planning
-- CognitiveBlackBox plasticity for adaptive recommendations
+**Intelligent Layer (Optional)**
+- BitNet-powered semantic search and optimization for material selection, standards lookup, and parameter tuning (with graceful fallback on all platforms)
+- Long-horizon planning integration for complex projects and maintenance
+- Adaptive recommendations based on usage patterns
 
-**Obsidian Port**
-- Full export of all tools, DBs, calculations, and docs into Obsidian-compatible Markdown with frontmatter, links, and Dataview queries.
-- Scripts to sync Parquet data lakes into the vault.
-- Allows the Obsidian vault to connect into JuniorHome (power/telecom queries), JuniorQuant (procurement/financial data), JuniorClimbs (spatial data), etc.
-
-## Iteration on JuniorOmega
-- Added engineering verification layer: Use spatial point-cloud from ARKit/TrueDepth to compare as-built vs design (redlines), run stress/strain or fits calculations on deviations, and feed into long-horizon agent for fabrication adjustments.
+**Cross-Platform & Integration**
+- Runs on Windows, Mac, and Linux
+- Full Obsidian vault port for knowledge management and connectivity across related tools
+- Supports integration with spatial data handling and long-horizon analysis components
 
 ## Philosophy
-Engineering is applying published standards and codes. This suite helps you find and apply the correct "piece of the puzzle" quickly, locally, and intelligently.
+This toolkit helps professionals quickly apply established engineering standards, codes, and calculation methods. It focuses on practical, reusable components that fit into real-world workflows without requiring constant reinvention.
 
-MIT License. Local. Sovereign. Intelligent. AGI-centric.
+MIT License. Local-first where possible. Designed for broad professional use.

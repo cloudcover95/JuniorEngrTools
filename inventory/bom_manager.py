@@ -1,5 +1,5 @@
 # JuniorEngrTools/inventory/bom_manager.py
-# Versioned + flattened BOM with Obsidian export and allocator integration.
+# BOM management with Obsidian export.
 
 from ..core.parquet_engineering_schema import ENGINEERING_SCHEMA_V3
 

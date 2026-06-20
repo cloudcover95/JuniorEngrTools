@@ -1,5 +1,5 @@
 # JuniorEngrTools/calculators/motion_force.py
-# Full A3 Motion Control calculators + BitNet optimization.
+# Motion and force calculators with optional acceleration.
 
 import math
 try:
@@ -35,5 +35,4 @@ class MotionForceCalculator:
         return {'acceleration': accel}
 
     def optimize_parameters(self, constraints):
-        # BitNet smart optimization
         return {'recommended_pitch': 5.0, 'efficiency': 0.92}

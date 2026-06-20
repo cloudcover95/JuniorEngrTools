@@ -1,5 +1,5 @@
 # JuniorEngrTools/junioromega_iteration/spatial_engineering_verification.py
-# Iteration on JuniorOmega: Engineering verification using ARKit point-cloud vs design.
+# Spatial verification integration.
 
 from ..calculators.structural import StructuralCalculator
 
