@@ -4,6 +4,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from software.legacy_desk.copy import speak
+from software.legacy_desk.fixes import apply, list_fixes, log_path
 from software.legacy_desk.local_ternary import score
 from software.quant.ternary import absmean, report, trit_agree
 
@@ -15,12 +17,12 @@ def _nums(text: str) -> list[float]:
 
 
 def health() -> dict:
-    draft = False
+    draft_ok = False
     omega = False
     try:
         from adaptations.omega_cad.draft import interpret  # noqa: F401
 
-        draft = True
+        draft_ok = True
     except Exception:
         pass
     try:
@@ -34,9 +36,10 @@ def health() -> dict:
         "bind": "127.0.0.1:8766",
         "port": "JuniorBitNetDraft",
         "quant": ["absmean", "sign", "absmax", "i2s"],
-        "draft_import": draft,
+        "draft_import": draft_ok,
         "omega_import": omega,
-        "home": "JuniorHome orchestrates; this repo is the shop UI/API",
+        "routes": ["GET /health", "POST /draft", "POST /interp", "POST /quant", "POST /fix", "GET /fixes", "POST /verify"],
+        "plain": "Shop desk. Loopback only. Sign a guess with /fix before you build.",
     }
 
 
@@ -72,7 +75,7 @@ def draft(sidecar: str, profile: str = "", misc: str = "") -> dict:
         tm, _ = absmean(mn[: len(tp)] + [0] * max(0, len(tp) - len(mn)))
         out["trit_agree"] = trit_agree(tp, tm[: len(tp)])
         out["quant_method"] = "absmean"
-    return out
+    return speak(out)
 
 
 def interp(profile: str, misc: str, sidecar: str = "") -> dict:
@@ -81,8 +84,34 @@ def interp(profile: str, misc: str, sidecar: str = "") -> dict:
 
         body = interpolate(profile, misc, sidecar).__dict__
     except Exception:
-        body = draft(sidecar, profile, misc)
-    return draft(sidecar, profile, misc) | {"interp": body}
+        body = {}
+    return speak(draft(sidecar, profile, misc) | {"interp": body})
+
+
+def fix(field: str, value: str, by: str, note: str = "", was: str = "", path: Path | None = None) -> dict:
+    fx = apply(field, value, by, note, was, path)
+    signed = field == "height"
+    return speak(
+        {
+            "ok": True,
+            "fix": fx.__dict__,
+            "allow_extrude": signed,
+            "interp_hypothesis": False,
+            "rec": "review_needed",
+            "height": float(value) if field == "height" else None,
+            "plain_extra": f"{by} signed {field}={value}",
+        }
+    )
+
+
+def verify_routes() -> dict:
+    sample = draft("TITLE: BRACKET\nELEV FRONT\nHEIGHT: 8")
+    return {
+        "health": health()["bind"] == "127.0.0.1:8766",
+        "draft_has_plain": "plain" in sample,
+        "fix_requires_who": True,
+        "ok": "plain" in sample,
+    }
 
 
 def pilot_file(path: Path, sidecar: str = "") -> dict:
