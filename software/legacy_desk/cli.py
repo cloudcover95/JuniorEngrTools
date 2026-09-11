@@ -5,6 +5,7 @@ import json
 import sys
 from pathlib import Path
 
+from software.legacy_desk.compile_api import compile_inputs
 from software.legacy_desk.endpoints import draft, fix, health, interp, pilot_file, quant_dims, verify_routes
 
 
@@ -16,6 +17,10 @@ def main(argv: list[str]) -> int:
     if cmd == "verify":
         print(json.dumps(verify_routes(), indent=2))
         return 0
+    if cmd == "compile":
+        text = Path(argv[2]).read_text(encoding="utf-8") if len(argv) > 2 else sys.stdin.read()
+        print(json.dumps(compile_inputs(text), indent=2))
+        return 0 if compile_inputs(text)["ready"] else 1
     if cmd == "draft":
         text = Path(argv[2]).read_text(encoding="utf-8") if len(argv) > 2 else sys.stdin.read()
         print(json.dumps(draft(text), indent=2))
@@ -30,7 +35,6 @@ def main(argv: list[str]) -> int:
         print(json.dumps(quant_dims([float(x) for x in argv[2:]]), indent=2))
         return 0
     if cmd == "fix":
-        # fix height 8 nico "tape measure"
         field, value, by = argv[2], argv[3], argv[4]
         note = " ".join(argv[5:]) if len(argv) > 5 else ""
         print(json.dumps(fix(field, value, by, note), indent=2))
@@ -43,7 +47,7 @@ def main(argv: list[str]) -> int:
         from software.legacy_desk.server import serve
 
         return serve()
-    print("health | verify | draft | interp | quant | fix <field> <value> <who> [note] | pilot | serve")
+    print("health | verify | compile [sidecar] | draft | interp | quant | fix | pilot | serve")
     return 2
 
 
