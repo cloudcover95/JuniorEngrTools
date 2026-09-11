@@ -5,13 +5,16 @@ import json
 import sys
 from pathlib import Path
 
-from software.legacy_desk.endpoints import draft, health, interp, pilot_file, quant_dims
+from software.legacy_desk.endpoints import draft, fix, health, interp, pilot_file, quant_dims, verify_routes
 
 
 def main(argv: list[str]) -> int:
     cmd = argv[1] if len(argv) > 1 else "health"
     if cmd == "health":
         print(json.dumps(health(), indent=2))
+        return 0
+    if cmd == "verify":
+        print(json.dumps(verify_routes(), indent=2))
         return 0
     if cmd == "draft":
         text = Path(argv[2]).read_text(encoding="utf-8") if len(argv) > 2 else sys.stdin.read()
@@ -24,8 +27,13 @@ def main(argv: list[str]) -> int:
         print(json.dumps(interp(profile, misc, side), indent=2))
         return 0
     if cmd == "quant":
-        vals = [float(x) for x in argv[2:]]
-        print(json.dumps(quant_dims(vals), indent=2))
+        print(json.dumps(quant_dims([float(x) for x in argv[2:]]), indent=2))
+        return 0
+    if cmd == "fix":
+        # fix height 8 nico "tape measure"
+        field, value, by = argv[2], argv[3], argv[4]
+        note = " ".join(argv[5:]) if len(argv) > 5 else ""
+        print(json.dumps(fix(field, value, by, note), indent=2))
         return 0
     if cmd == "pilot" and len(argv) > 2:
         side = Path(argv[3]).read_text(encoding="utf-8") if len(argv) > 3 else ""
@@ -35,7 +43,7 @@ def main(argv: list[str]) -> int:
         from software.legacy_desk.server import serve
 
         return serve()
-    print("health | draft | interp | quant <nums...> | pilot | serve")
+    print("health | verify | draft | interp | quant | fix <field> <value> <who> [note] | pilot | serve")
     return 2
 
 
