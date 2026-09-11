@@ -31,24 +31,37 @@ def health() -> dict:
     }
 
 
-def draft(sidecar: str) -> dict:
+def draft(sidecar: str, profile: str = "", misc: str = "") -> dict:
     try:
         from adaptations.omega_cad.draft import interpret
 
-        c = interpret(sidecar)
+        c = interpret(sidecar, profile=profile, misc=misc)
         return {
             "port": c.port,
             "rec": c.rec,
             "rigidity": c.rigidity,
             "height": c.height,
             "allow_extrude": c.allow_extrude,
+            "interp_source": c.interp_source,
+            "interp_hypothesis": c.interp_hypothesis,
+            "agreement": c.agreement,
             "proposals": c.proposals,
         }
     except Exception:
-        s = score(sidecar)
+        s = score(sidecar + profile + misc)
         low = sidecar.lower()
-        allow = s["rec"] != "low_confidence" and ("elev" in low or "height" in low or "thickness" in low)
-        return {**s, "allow_extrude": allow, "proposals": {}}
+        allow = s["rec"] != "low_confidence" and ("elev" in low or "height" in low)
+        return {**s, "allow_extrude": allow, "interp_hypothesis": True, "proposals": {}}
+
+
+def interp(profile: str, misc: str, sidecar: str = "") -> dict:
+    try:
+        from adaptations.omega_cad.interpolate import interpolate
+
+        i = interpolate(profile, misc, sidecar)
+        return i.__dict__
+    except Exception:
+        return draft(sidecar, profile, misc)
 
 
 def pilot_file(path: Path, sidecar: str = "") -> dict:
