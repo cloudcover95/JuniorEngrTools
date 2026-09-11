@@ -5,7 +5,7 @@ import json
 import sys
 from pathlib import Path
 
-from software.legacy_desk.endpoints import draft, health, pilot_file
+from software.legacy_desk.endpoints import draft, health, interp, pilot_file
 
 
 def main(argv: list[str]) -> int:
@@ -17,6 +17,12 @@ def main(argv: list[str]) -> int:
         text = Path(argv[2]).read_text(encoding="utf-8") if len(argv) > 2 else sys.stdin.read()
         print(json.dumps(draft(text), indent=2))
         return 0
+    if cmd == "interp":
+        profile = Path(argv[2]).read_text(encoding="utf-8") if len(argv) > 2 else ""
+        misc = Path(argv[3]).read_text(encoding="utf-8") if len(argv) > 3 else ""
+        side = Path(argv[4]).read_text(encoding="utf-8") if len(argv) > 4 else ""
+        print(json.dumps(interp(profile, misc, side), indent=2))
+        return 0
     if cmd == "pilot" and len(argv) > 2:
         side = Path(argv[3]).read_text(encoding="utf-8") if len(argv) > 3 else ""
         print(json.dumps(pilot_file(Path(argv[2]), side), indent=2, default=str))
@@ -25,7 +31,7 @@ def main(argv: list[str]) -> int:
         from software.legacy_desk.server import serve
 
         return serve()
-    print("health | draft [file] | pilot <sheet> [sidecar] | serve")
+    print("health | draft [file] | interp <profile> <misc> [sidecar] | pilot <sheet> [sidecar] | serve")
     return 2
 
 

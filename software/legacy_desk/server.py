@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-from software.legacy_desk.endpoints import draft, health
+from software.legacy_desk.endpoints import draft, health, interp
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -26,7 +26,24 @@ class Handler(BaseHTTPRequestHandler):
         n = int(self.headers.get("Content-Length") or 0)
         payload = json.loads(self.rfile.read(n) or b"{}")
         if self.path.startswith("/draft"):
-            self._send(200, draft(str(payload.get("sidecar") or "")))
+            self._send(
+                200,
+                draft(
+                    str(payload.get("sidecar") or ""),
+                    str(payload.get("profile") or ""),
+                    str(payload.get("misc") or ""),
+                ),
+            )
+            return
+        if self.path.startswith("/interp"):
+            self._send(
+                200,
+                interp(
+                    str(payload.get("profile") or ""),
+                    str(payload.get("misc") or ""),
+                    str(payload.get("sidecar") or ""),
+                ),
+            )
             return
         self._send(404, {"error": "not_found"})
 
@@ -37,6 +54,6 @@ class Handler(BaseHTTPRequestHandler):
 def serve(host: str = "127.0.0.1", port: int = 8766) -> int:
     if host != "127.0.0.1":
         raise RuntimeError("loopback only")
-    print(json_dumps := f"legacy desk http://{host}:{port}/health")
+    print(f"legacy desk http://{host}:{port}/health")
     ThreadingHTTPServer((host, port), Handler).serve_forever()
     return 0
