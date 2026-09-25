@@ -1,8 +1,7 @@
 # Shop / metal-building screens
 
-These are owner questions, not sealed calcs.
-ASCE 7-22 / IBC 2024 / ACI 360 / AISC 360 / MBMA apply in the jurisdiction — hire the PE for 5,000 lb hangers, SDC D, and forklift slabs.
+Owner-question estimators. Not sealed calcs.
+Use ASCE 7 / IBC / ACI 360 / AISC 360 / MBMA in the jurisdiction.
+Hire a PE for large hangers, seismic, and forklift slabs.
 
-Typical metal-building collateral is specified ~5–10 psf; ~300 lb midspan on a 25 ft purlin is in the same neighborhood as 5 psf. A 5,000 lb root is not a purlin load.
-
-Gemini bugs rejected: `I = S*4`, `E = 29,000,000` as a Python tuple, numpy required, `is_safe` as a stamp.
+Collateral on metal buildings is a specified psf (often ~5–10), not a code minimum.
